@@ -1,0 +1,39 @@
+name: Feature epic
+description: A user-facing feature that groups UI, mechanics, art, audio, and QA work.
+title: "[Epic] "
+labels: [epic]
+body:
+  - type: textarea
+    id: goal
+    attributes:
+      label: User-facing goal
+      description: What the user can do or feel when this ships.
+    validations:
+      required: true
+  - type: textarea
+    id: pillars
+    attributes:
+      label: Principles supported
+      description: Which product principles this feature serves, and how.
+    validations:
+      required: true
+  - type: textarea
+    id: prototype-result
+    attributes:
+      label: Prototype result
+      description: The build, change, or drop decision from each prototype, with a link to its issue. Leave blank if there was no prototype.
+      placeholder: "Build it. See #124: the inline editor tested well with three users."
+  - type: textarea
+    id: done
+    attributes:
+      label: Done when
+      description: Observable checks a reviewer can see or run.
+      placeholder: |
+        - A user can ___ and sees ___
+    validations:
+      required: true
+  - type: textarea
+    id: out-of-scope
+    attributes:
+      label: Out of scope
+      description: What this epic will not do, to stop it growing.

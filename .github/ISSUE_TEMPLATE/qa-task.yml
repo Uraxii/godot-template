@@ -1,0 +1,57 @@
+name: QA test pass
+description: A test pass that checks an epic works as a whole.
+title: "[QA] "
+labels: [qa]
+body:
+  - type: input
+    id: parent
+    attributes:
+      label: Parent epic
+      description: Epic issue number, for sub-issue linking.
+      placeholder: "#123"
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: What to test
+      description: Which of the epic's Done when items this pass covers.
+    validations:
+      required: true
+  - type: checkboxes
+    id: platforms
+    attributes:
+      label: Platforms
+      description: Tick every platform to test on.
+      options:
+        - label: Windows
+        - label: macOS
+        - label: Linux
+        - label: Mobile
+        - label: Web
+  - type: input
+    id: build
+    attributes:
+      label: Build or version
+    validations:
+      required: true
+  - type: textarea
+    id: cases
+    attributes:
+      label: Test cases
+      description: Each case with its steps and expected result.
+      placeholder: |
+        1. Do ___ → expect ___
+        2. Do ___ → expect ___
+    validations:
+      required: true
+  - type: textarea
+    id: done
+    attributes:
+      label: Done when
+      description: Observable checks a reviewer can see or run.
+      placeholder: |
+        - Every case passes on every ticked platform
+        - Every failure is filed as a bug and linked here
+    validations:
+      required: true
