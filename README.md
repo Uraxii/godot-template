@@ -11,18 +11,24 @@ A GitHub template repository. It gives a new repo:
 
 1. Click **Use this template** on GitHub.
 2. Replace every `<repo>` in `CLAUDE.md` with your repo name.
-3. Create the labels the forms apply:
+3. Clone your new repo, then create the labels the forms apply from inside the clone:
 
 ```sh
-gh label create epic
-gh label create prototype
-gh label create mechanics
-gh label create ui
-gh label create art
-gh label create audio
-gh label create qa
-gh label create bug
+gh label create epic --force
+gh label create prototype --force
+gh label create mechanics --force
+gh label create ui --force
+gh label create art --force
+gh label create audio --force
+gh label create qa --force
+gh label create bug --force
 ```
 
-4. Create `develop` and make it the default working branch.
+4. Create `develop` and make it GitHub's default branch:
+
+```sh
+git push origin main:develop
+gh repo edit --default-branch develop
+```
+
 5. List your own directories in `INDEX.md`.

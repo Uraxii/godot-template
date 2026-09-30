@@ -1,3 +1,5 @@
+# Index
+
 - `.github/ISSUE_TEMPLATE/`: issue forms for epics, prototypes, mechanics, UI, art, audio, QA, and bugs.
 - `.github/workflows/`: MegaLinter and the conventional-commit PR title check.
 - `.github/pull_request_template.md`: the PR body every change fills in.

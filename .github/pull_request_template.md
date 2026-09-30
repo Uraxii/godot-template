@@ -40,5 +40,3 @@
 <!-- What this PR does not do, or does imperfectly, that a user or reviewer would notice.
      One line each: the effect on someone, and a link to the issue tracking it.
      Leave out internal caveats nobody can act on. Delete this section if nothing applies. -->
-
-- 

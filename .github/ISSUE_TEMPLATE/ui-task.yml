@@ -44,7 +44,7 @@ body:
     id: a11y
     attributes:
       label: Accessibility notes
-      description: Text size, contrast, colorblind modes, remapping, screen reader.
+      description: Text size, contrast, colorblind modes, keyboard navigation, screen reader.
   - type: textarea
     id: done
     attributes:
