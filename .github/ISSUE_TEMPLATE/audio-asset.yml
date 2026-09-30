@@ -1,0 +1,51 @@
+name: Audio asset
+description: A sound or music asset needed for an epic.
+title: "[Audio] "
+labels: [audio]
+body:
+  - type: input
+    id: parent
+    attributes:
+      label: Parent epic
+      description: Epic issue number, for sub-issue linking.
+      placeholder: "#123"
+    validations:
+      required: true
+  - type: dropdown
+    id: type
+    attributes:
+      label: Audio type
+      options:
+        - SFX
+        - Music
+        - Ambience
+        - Voice
+    validations:
+      required: true
+  - type: textarea
+    id: mood
+    attributes:
+      label: Mood references
+      description: Links or descriptions of the target feel.
+  - type: textarea
+    id: triggers
+    attributes:
+      label: Trigger points
+      description: What in the game plays this sound.
+    validations:
+      required: true
+  - type: input
+    id: length
+    attributes:
+      label: Length and loop
+      description: Duration, and whether it loops.
+      placeholder: "3s, one-shot"
+  - type: textarea
+    id: done
+    attributes:
+      label: Done when
+      description: Observable checks a playtester can see or run.
+      placeholder: |
+        - Plays in the build when ___, at the right volume
+    validations:
+      required: true

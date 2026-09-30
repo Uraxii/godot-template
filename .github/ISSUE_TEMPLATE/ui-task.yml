@@ -1,0 +1,56 @@
+name: UI task
+description: Screens, menus, or HUD work for an epic.
+title: "[UI] "
+labels: [ui]
+body:
+  - type: input
+    id: parent
+    attributes:
+      label: Parent epic
+      description: Epic issue number, for sub-issue linking.
+      placeholder: "#123"
+    validations:
+      required: true
+  - type: textarea
+    id: screens
+    attributes:
+      label: Screens and HUD elements
+      description: Which screens or HUD pieces change.
+    validations:
+      required: true
+  - type: textarea
+    id: mockups
+    attributes:
+      label: Mockup links
+      description: Links to mockups, usually from a UI mockup prototype that ended in build it.
+  - type: checkboxes
+    id: input
+    attributes:
+      label: Input methods
+      description: Tick every input this UI must support.
+      options:
+        - label: Mouse and keyboard
+        - label: Controller
+        - label: Touch
+  - type: textarea
+    id: try-it
+    attributes:
+      label: Try it
+      description: One line per ticked input method, with what you should see.
+      placeholder: "Controller: ___ → see ___"
+    validations:
+      required: true
+  - type: textarea
+    id: a11y
+    attributes:
+      label: Accessibility notes
+      description: Text size, contrast, colorblind modes, remapping, screen reader.
+  - type: textarea
+    id: done
+    attributes:
+      label: Done when
+      description: Observable checks a playtester can see or run.
+      placeholder: |
+        - A player can ___ and sees ___
+    validations:
+      required: true

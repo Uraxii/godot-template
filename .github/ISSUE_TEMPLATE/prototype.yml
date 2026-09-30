@@ -1,0 +1,73 @@
+name: Prototype
+description: A quick, throwaway test that answers one question before real work starts.
+title: "[Prototype] "
+labels: [prototype]
+body:
+  - type: markdown
+    attributes:
+      value: Prototype work is thrown away, not polished into the real feature. Mark the real tasks as blocked by this issue so they wait for the decision.
+  - type: input
+    id: parent
+    attributes:
+      label: Parent epic
+      description: Epic issue number, for sub-issue linking.
+      placeholder: "#123"
+    validations:
+      required: true
+  - type: textarea
+    id: question
+    attributes:
+      label: Question
+      description: The one question this prototype answers.
+      placeholder: "Is a double jump fun in the rooftop levels?"
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Prototype type
+      options:
+        - Greybox level
+        - Mechanic test
+        - Paper or whiteboard
+        - UI mockup (static)
+        - UI mockup (clickable)
+        - Art or style test
+        - Audio test
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: timebox
+    attributes:
+      label: Time box
+      description: The most time to spend before deciding.
+      placeholder: "2 days"
+    validations:
+      required: true
+  - type: textarea
+    id: criteria
+    attributes:
+      label: How we'll judge it
+      description: What you need to see to call it a yes.
+      placeholder: |
+        - Three playtesters use it without being told
+        - It feels good with a controller
+    validations:
+      required: true
+  - type: textarea
+    id: result
+    attributes:
+      label: Result
+      description: Fill in when done. Build it, change it, or drop it, and why. Link a clip or screenshot.
+  - type: textarea
+    id: done
+    attributes:
+      label: Done when
+      description: Checks that show the prototype is finished and the decision is recorded.
+      value: |
+        - The result above says build it, change it, or drop it
+        - A clip or screenshot is linked
+        - The epic's Prototype result field is updated
+    validations:
+      required: true

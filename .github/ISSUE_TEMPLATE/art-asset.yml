@@ -1,0 +1,59 @@
+name: Art asset
+description: An art asset needed for an epic.
+title: "[Art] "
+labels: [art]
+body:
+  - type: input
+    id: parent
+    attributes:
+      label: Parent epic
+      description: Epic issue number, for sub-issue linking.
+      placeholder: "#123"
+    validations:
+      required: true
+  - type: dropdown
+    id: type
+    attributes:
+      label: Asset type
+      options:
+        - 2D sprite
+        - 3D model
+        - Texture
+        - Animation
+        - VFX
+        - UI art
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: style
+    attributes:
+      label: Style references
+      description: Links or images showing the target look.
+  - type: textarea
+    id: specs
+    attributes:
+      label: Specs
+      description: Size, poly count, format.
+      placeholder: |
+        Size:
+        Poly count:
+        Format:
+    validations:
+      required: true
+  - type: textarea
+    id: location
+    attributes:
+      label: In-game location
+      description: Where the player sees this asset.
+    validations:
+      required: true
+  - type: textarea
+    id: done
+    attributes:
+      label: Done when
+      description: Observable checks a playtester can see or run.
+      placeholder: |
+        - Shows in-game at ___ with no stretching or seams
+    validations:
+      required: true
