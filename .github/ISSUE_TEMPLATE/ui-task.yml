@@ -1,5 +1,5 @@
 name: UI task
-description: Screens, menus, or interface work for an epic.
+description: Screens, menus, or HUD work for an epic.
 title: "[UI] "
 labels: [ui]
 body:
@@ -14,8 +14,8 @@ body:
   - type: textarea
     id: screens
     attributes:
-      label: Screens and interface elements
-      description: Which screens or interface pieces change.
+      label: Screens and HUD elements
+      description: Which screens or HUD pieces change.
     validations:
       required: true
   - type: textarea
@@ -30,27 +30,27 @@ body:
       description: Tick every input this UI must support.
       options:
         - label: Mouse and keyboard
+        - label: Controller
         - label: Touch
-        - label: Assistive technology
   - type: textarea
     id: try-it
     attributes:
       label: Try it
       description: One line per ticked input method, with what you should see.
-      placeholder: "Touch: ___ → see ___"
+      placeholder: "Controller: ___ → see ___"
     validations:
       required: true
   - type: textarea
     id: a11y
     attributes:
       label: Accessibility notes
-      description: Text size, contrast, colorblind modes, keyboard navigation, screen reader.
+      description: Text size, contrast, colorblind modes, remapping, screen reader.
   - type: textarea
     id: done
     attributes:
       label: Done when
-      description: Observable checks a reviewer can see or run.
+      description: Observable checks a playtester can see or run.
       placeholder: |
-        - A user can ___ and sees ___
+        - A player can ___ and sees ___
     validations:
       required: true

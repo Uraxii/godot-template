@@ -1,5 +1,5 @@
 name: Art asset
-description: A visual asset needed for an epic.
+description: An art asset needed for an epic.
 title: "[Art] "
 labels: [art]
 body:
@@ -16,12 +16,12 @@ body:
     attributes:
       label: Asset type
       options:
-        - Image or illustration
-        - Icon
+        - 2D sprite
         - 3D model
         - Texture
         - Animation
-        - Visual effect
+        - VFX
+        - UI art
         - Other
     validations:
       required: true
@@ -34,26 +34,26 @@ body:
     id: specs
     attributes:
       label: Specs
-      description: Size, resolution, format.
+      description: Size, poly count, format.
       placeholder: |
         Size:
-        Resolution:
+        Poly count:
         Format:
     validations:
       required: true
   - type: textarea
     id: location
     attributes:
-      label: Where it appears
-      description: Where the user sees this asset.
+      label: In-game location
+      description: Where the player sees this asset.
     validations:
       required: true
   - type: textarea
     id: done
     attributes:
       label: Done when
-      description: Observable checks a reviewer can see or run.
+      description: Observable checks a playtester can see or run.
       placeholder: |
-        - Shows in the product at ___ with no stretching or seams
+        - Shows in-game at ___ with no stretching or seams
     validations:
       required: true

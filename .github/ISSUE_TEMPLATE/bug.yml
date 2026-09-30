@@ -1,5 +1,5 @@
 name: Bug report
-description: Something in the product is broken.
+description: Something in the game is broken.
 title: "[Bug] "
 labels: [bug]
 body:
@@ -32,10 +32,18 @@ body:
     validations:
       required: true
   - type: input
+    id: godot-version
+    attributes:
+      label: Godot version
+      description: The engine version the build uses, from Help > About in the editor.
+      placeholder: "4.7.2"
+    validations:
+      required: true
+  - type: input
     id: platform
     attributes:
       label: Platform
-      placeholder: "Windows, Linux, iOS, Chrome..."
+      placeholder: "Windows, Linux, Web, Android..."
     validations:
       required: true
   - type: dropdown
@@ -53,4 +61,4 @@ body:
     id: attachments
     attributes:
       label: Attachments
-      description: Screenshots, video, logs, or data files. Drag files here.
+      description: Screenshots, video, logs, or save files. Drag files here.

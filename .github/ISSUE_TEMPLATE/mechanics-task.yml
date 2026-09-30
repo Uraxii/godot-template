@@ -1,5 +1,5 @@
 name: Mechanics task
-description: Rules, systems, or core behavior work for an epic.
+description: Gameplay rules or systems work for an epic.
 title: "[Mechanics] "
 labels: [mechanics]
 body:
@@ -15,15 +15,15 @@ body:
     id: rules
     attributes:
       label: Rules and behavior
-      description: How the rules or core behavior work.
+      description: How the mechanic works.
     validations:
       required: true
   - type: textarea
     id: tuning
     attributes:
       label: Tuning values
-      description: Each value someone will tune, with its starting value and intended feel.
-      placeholder: "Retry limit 3: a failed sync gives up after three tries"
+      description: Each value designers will tweak, with its starting value and intended feel.
+      placeholder: "Jump height 3.2: clears a two-tile gap with no running start"
   - type: textarea
     id: edge
     attributes:
@@ -33,7 +33,7 @@ body:
     id: try-it
     attributes:
       label: Try it
-      description: Steps and what you should see at each one, for every variant this touches (mode, input, role).
+      description: Steps and what you should see at each one, for every variant the mechanic touches (difficulty, input, character).
       placeholder: |
         1. Do ___ → see ___
         2. Do ___ → see ___
@@ -43,8 +43,8 @@ body:
     id: done
     attributes:
       label: Done when
-      description: Observable checks a reviewer can see or run.
+      description: Observable checks a playtester can see or run.
       placeholder: |
-        - A user can ___ and sees ___
+        - A player can ___ and sees ___
     validations:
       required: true

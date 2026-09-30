@@ -1,20 +1,20 @@
 name: Feature epic
-description: A user-facing feature that groups UI, mechanics, art, audio, and QA work.
+description: A player-facing feature that groups UI, mechanics, art, audio, and QA work.
 title: "[Epic] "
 labels: [epic]
 body:
   - type: textarea
     id: goal
     attributes:
-      label: User-facing goal
-      description: What the user can do or feel when this ships.
+      label: Player-facing goal
+      description: What the player can do or feel when this ships.
     validations:
       required: true
   - type: textarea
     id: pillars
     attributes:
-      label: Principles supported
-      description: Which product principles this feature serves, and how.
+      label: Design pillars supported
+      description: Which pillars this feature serves, and how.
     validations:
       required: true
   - type: textarea
@@ -22,14 +22,14 @@ body:
     attributes:
       label: Prototype result
       description: The build, change, or drop decision from each prototype, with a link to its issue. Leave blank if there was no prototype.
-      placeholder: "Build it. See #124: the inline editor tested well with three users."
+      placeholder: "Build it. See #124: double jump tested well with a controller."
   - type: textarea
     id: done
     attributes:
       label: Done when
-      description: Observable checks a reviewer can see or run.
+      description: Observable checks a playtester can see or run.
       placeholder: |
-        - A user can ___ and sees ___
+        - A player can ___ and sees ___
     validations:
       required: true
   - type: textarea
