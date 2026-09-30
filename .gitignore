@@ -1,0 +1,8 @@
+# Godot 4
+.godot/
+/android/
+*.translation
+
+# Build output and the editor binaries scripts/setup-project.sh downloads
+/build/
+.tools/
