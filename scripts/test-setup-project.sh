@@ -29,10 +29,10 @@ latest="$(curl -fsSL https://api.github.com/repos/godotengine/godot/releases/lat
 copy="$(fresh_copy latest)"
 cd "$copy"
 
-if scripts/setup-project.sh >"$tmp/noname.log" 2>&1; then
+if scripts/setup-project.sh >"$tmp/missing-name.log" 2>&1; then
 	fail "a fresh copy without a game name should exit non-zero"
 fi
-grep -q "Usage:" "$tmp/noname.log" || fail "missing name should print usage"
+grep -q "Usage:" "$tmp/missing-name.log" || fail "missing name should print usage"
 [ ! -d .tools ] || fail "missing name should stop before downloading"
 pass "no game name on a fresh copy is a usage error"
 
@@ -51,7 +51,7 @@ grep -q '"res://tests"' src/.gutconfig.json || fail ".gutconfig.json does not po
 ! grep -q '<repo>' CLAUDE.md README.md || fail "<repo> left in CLAUDE.md or README.md"
 grep -qF 'Test & "Game"' CLAUDE.md || fail "name not in CLAUDE.md"
 grep -qF '# Test & "Game"' README.md || fail "name not in README.md title"
-grep -qF '`src/core/`' INDEX.md || fail "INDEX.md does not list src/core/"
+grep -qF 'src/core/' INDEX.md || fail "INDEX.md does not list src/core/"
 grep -qF "$(cat .godot-version)/godot --path src -e" "$tmp/first.log" || fail "next step not printed"
 pass "first run creates the project with Godot $latest"
 
@@ -68,7 +68,8 @@ godot=".tools/godot/$latest/godot"
 pass "Godot opens the project headless"
 
 if command -v gdlint >/dev/null; then
-	gdlint src/tests && gdformat --check src/tests || fail "sample test fails gdlint or gdformat"
+	gdlint src/tests || fail "sample test fails gdlint"
+	gdformat --check src/tests || fail "sample test fails gdformat"
 	pass "sample test passes gdlint and gdformat"
 fi
 

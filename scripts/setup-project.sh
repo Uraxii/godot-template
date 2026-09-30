@@ -104,6 +104,7 @@ EOF
 	rm -rf "$godot_dir"
 	mv "$work/unpacked" "$godot_dir"
 fi
+# shellcheck disable=SC2016 # the launcher expands $0 and $@ when it runs, not now
 printf '#!/bin/sh\nexec "$(dirname "$0")/%s" "$@"\n' "$binary" >"$godot_dir/godot"
 chmod +x "$godot_dir/godot"
 printf '%s\n' "$version" >.godot-version
