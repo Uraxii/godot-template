@@ -1,0 +1,35 @@
+name: GUT tests
+
+on:
+  pull_request:
+  push:
+    branches: [main, develop]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  gut:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+      - id: project
+        run: |
+          if [ -f src/project.godot ]; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "No Godot project yet; run scripts/setup-project.sh to create one. Skipping tests." >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - if: steps.project.outputs.exists == 'true'
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: .tools/godot
+          key: godot-${{ runner.os }}-${{ hashFiles('.godot-version') }}
+      - if: steps.project.outputs.exists == 'true'
+        run: scripts/run-tests.sh
