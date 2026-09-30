@@ -1,0 +1,2 @@
+# Vendored Godot addons and generated or downloaded Godot files are not ours to lint.
+FILTER_REGEX_EXCLUDE: (src/addons/|src/\.godot/|\.tools/)
