@@ -63,15 +63,15 @@ if [ -z "$version" ] && [ -f .godot-version ]; then
 	version="$(tr -d '[:space:]' <.godot-version)"
 fi
 if [ -z "$version" ]; then
-	latest_json="$(gh api repos/godotengine/godot/releases/latest 2>/dev/null ||
-		curl -fsSL https://api.github.com/repos/godotengine/godot/releases/latest)" ||
-		die "could not reach the GitHub API to find the latest Godot release"
-	version="$(printf '%s' "$latest_json" | python3 -c 'import json, sys; print(json.load(sys.stdin)["tag_name"].removesuffix("-stable"))')"
+	latest_url="$(curl -fsSLI -o /dev/null -w '%{url_effective}' https://github.com/godotengine/godot/releases/latest)" ||
+		die "could not reach github.com to find the latest Godot release"
+	version="${latest_url##*/}"
+	version="${version%-stable}"
 fi
-case "$version" in
-4.[0-9]*) ;;
-*) die "unsupported Godot version '$version'; this template needs Godot 4.x" ;;
-esac
+[[ $version =~ ^[0-9]+\.[0-9]+(\.[0-9]+)?$ ]] || die "invalid Godot version '$version'; expected x.y or x.y.z, for example 4.5.1"
+[[ $version == 4.* ]] || die "unsupported Godot version '$version'; this template needs Godot 4.x"
+# Godot names its x.y.0 releases x.y.
+[[ $version == *.*.0 ]] && version="${version%.0}"
 major_minor="$(printf '%s' "$version" | cut -d. -f1-2)"
 
 tag="$version-stable"
@@ -115,29 +115,26 @@ if [ -f src/project.godot ]; then
 	exit 0
 fi
 
-gut_tag="$(curl -fsSL https://raw.githubusercontent.com/bitwes/Gut/main/README.md | python3 -c '
-import re, sys
-minor = int(sys.argv[1].split(".")[1])
-rows = []
-for line in sys.stdin:
-    m = re.match(r"\|\[(9\.\d+\.\d+)\]\(https://github\.com/bitwes/Gut/releases/tag/([^)]+)\)[^|]*\|([^|]+)\|", line)
-    if m:
-        minors = [int(x) for x in re.findall(r"4\.(\d+)", m.group(3))]
-        rows.append((tuple(map(int, m.group(1).split("."))), m.group(2), min(minors), max(minors)))
-rows.sort(reverse=True)
-fits = [tag for _, tag, lo, hi in rows if lo <= minor <= hi]
-if fits:
-    print(fits[0])
-elif rows and minor > max(hi for *_, hi in rows):
-    print(f"warning: no GUT release lists Godot 4.{minor} yet; using the newest one.", file=sys.stderr)
-    print(rows[0][1])
-' "$major_minor")" || die "could not find a GUT release for Godot $major_minor"
-[ -n "$gut_tag" ] || die "no GUT release supports Godot $major_minor"
+# Godot minor -> GUT tag, from https://github.com/bitwes/Gut#readme
+case "$major_minor" in
+4.0) gut_tag=v9.0.1 ;;
+4.1) gut_tag=v9.1.1 ;;
+4.2) gut_tag=v9.3.0 ;;
+4.3 | 4.4) gut_tag=v9.4.0 ;;
+4.5) gut_tag=v9.5.0 ;;
+4.6) gut_tag=v9.6.1 ;;
+4.7) gut_tag=v9.7.1 ;;
+*)
+	gut_tag=v9.7.1
+	echo "warning: no GUT release is listed for Godot $major_minor yet; using $gut_tag." >&2
+	;;
+esac
 
 echo "Downloading GUT $gut_tag ..."
 curl -fsSL -o "$work/gut.zip" "https://github.com/bitwes/Gut/archive/refs/tags/$gut_tag.zip" ||
 	die "could not download GUT $gut_tag"
 unzip -q "$work/gut.zip" -d "$work"
+rm -rf src/addons/gut
 mkdir -p src/addons
 mv "$work"/*/addons/gut src/addons/gut
 
@@ -196,6 +193,8 @@ pathlib.Path("INDEX.md").write_text("""# Index
 - `.github/`: issue forms, the PR template, and CI workflows.
 """)
 EOF
+
+"$godot_dir/godot" --headless --path src --import >/dev/null 2>&1 || die "the first import of src/ failed"
 
 echo
 echo "Created the Godot $major_minor project \"$name\" in src/ with GUT $gut_tag."

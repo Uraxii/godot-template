@@ -18,3 +18,7 @@ if grep -q "Parse Error" "$log"; then
 	echo "error: a script failed to parse, so GUT skipped it; see the Parse Error above" >&2
 	exit 1
 fi
+if ! grep -q "All tests passed" "$log"; then
+	echo "error: GUT did not report \"All tests passed\"; no tests ran, or the run ended early" >&2
+	exit 1
+fi

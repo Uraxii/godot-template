@@ -44,7 +44,7 @@ A GitHub template for Godot 4 games written in GDScript. It gives a new repo:
 CI runs [gdtoolkit](https://github.com/Scony/godot-gdscript-toolkit) on every `.gd` file outside `src/addons/`. To run it locally:
 
 ```sh
-pip install "gdtoolkit==4.*"
+pip install "gdtoolkit==4.5.*"
 find src -name '*.gd' -not -path 'src/addons/*' -not -path 'src/.godot/*' -exec gdlint {} +
 find src -name '*.gd' -not -path 'src/addons/*' -not -path 'src/.godot/*' -exec gdformat {} +
 ```

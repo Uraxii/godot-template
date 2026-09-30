@@ -23,8 +23,7 @@ fresh_copy() {
 	echo "$tmp/$1"
 }
 
-latest="$(curl -fsSL https://api.github.com/repos/godotengine/godot/releases/latest |
-	python3 -c 'import json, sys; print(json.load(sys.stdin)["tag_name"].removesuffix("-stable"))')"
+latest="$(curl -fsSLI -o /dev/null -w '%{url_effective}' https://github.com/godotengine/godot/releases/latest)"; latest="${latest##*/}"; latest="${latest%-stable}"
 
 copy="$(fresh_copy latest)"
 cd "$copy"
@@ -84,6 +83,18 @@ pass "a test that does not parse makes run-tests.sh exit non-zero"
 rm -f src/tests/test_failing.gd src/tests/test_failing.gd.uid
 scripts/run-tests.sh >/dev/null 2>&1 || fail "run-tests.sh failed after removing the failing test"
 pass "tests pass again after removing the failing test"
+find src -path src/.godot -prune -o -name '*.uid' -print | grep -q . || fail "setup did not import the project, so no .uid files exist"
+pass "setup imports the project, so .uid files exist before the first commit"
+mv src/tests "$tmp/tests-aside"
+if scripts/run-tests.sh >/dev/null 2>&1; then fail "run-tests.sh passed with no tests"; fi
+mv "$tmp/tests-aside" src/tests
+pass "no tests makes run-tests.sh exit non-zero"
+
+for bad in "4.5.1/../x" "4" "4.5.1.2" "4.5-rc1" "3.5" "4.5 "; do
+	if scripts/setup-project.sh --godot "$bad" >"$tmp/bad-version.log" 2>&1; then fail "--godot '$bad' should be rejected"; fi
+	grep -q "Godot version" "$tmp/bad-version.log" || fail "--godot '$bad' gave no version error"
+done
+pass "malformed --godot values are rejected"
 
 pinned="4.5.1"
 copy="$(fresh_copy pinned)"
@@ -94,5 +105,15 @@ grep -qxF 'config/features=PackedStringArray("4.5")' src/project.godot || fail "
 grep -qxF 'version="9.5.0"' src/addons/gut/plugin.cfg || fail "Godot 4.5 should get GUT 9.5.0"
 scripts/run-tests.sh >/dev/null 2>&1 || fail "run-tests.sh failed on Godot $pinned"
 pass "--godot $pinned creates a 4.5 project with GUT 9.5.0 and its tests pass"
+
+rm src/project.godot
+scripts/setup-project.sh "Pinned Game" >/dev/null
+[ ! -e src/addons/gut/gut ] || fail "rerun nested GUT inside itself"
+[ -f src/project.godot ] && [ -f src/addons/gut/plugin.cfg ] || fail "rerun did not recreate the project"
+pass "a rerun after partial setup replaces GUT instead of nesting it"
+
+scripts/setup-project.sh --godot 4.5.0 >/dev/null
+[ "$(cat .godot-version)" = "4.5" ] || fail "--godot 4.5.0 should be stored as 4.5"
+pass "--godot 4.5.0 works and is stored as 4.5"
 
 echo "All setup-project checks passed."

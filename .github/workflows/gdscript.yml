@@ -22,7 +22,7 @@ jobs:
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: "3.x"
-      - run: pip install "gdtoolkit==4.*"
+      - run: pip install "gdtoolkit==4.5.*"
       - name: gdlint and gdformat, skipping vendored addons
         run: |
           mapfile -t files < <(find src -name '*.gd' -not -path 'src/addons/*' -not -path 'src/.godot/*' 2>/dev/null | sort)
